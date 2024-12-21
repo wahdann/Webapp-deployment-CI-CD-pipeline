@@ -10,7 +10,7 @@ pipeline {
     stages {
        stage('Pull Code from Git') {
             steps {
-                git branch: 'main', url: '$GITHUB_REPO', credentialsId: "git_cred"
+                git branch: 'main', url:'https://github.com/wahdann/final-task.git', credentialsId: "git_cred"
             }
         }
         stage('Build Docker Image') {
