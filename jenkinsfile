@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_IMAGE = 'wahdann/flask-weather-app'
+        GITHUB_REPO = 'https://github.com/wahdann/final-task.git'
+        INVENTORY_PATH = '/mnt/d/Code_Files/ansible/inventory.ini'
+    }
+    
+    stages {
+        stage('Clone Code from GitHub') {
+            steps {
+                git credentialsId: '4301f50b-9827-4838-bc70-127c20778da9', url: 'https://github.com/wahdann/final-task.git'
+            }
+        }
+        
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build(DOCKER_IMAGE)
+                }
+            }
+        }
+
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('', '56c06540-341c-4d92-86e4-07845625fbb3') {
+                        docker.image(DOCKER_IMAGE).push()
+                    }
+                }
+            }
+        }
+
+        stage('Run Ansible Playbook') {
+            steps {
+                script {
+                    sh """
+                    ansible-playbook -i ${INVENTORY_PATH} deploy.yml
+                    """
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
+
