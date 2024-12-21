@@ -8,12 +8,11 @@ pipeline {
     }
     
     stages {
-        stage('Clone Code from GitHub') {
+       stage('Pull Code from Git') {
             steps {
-                git credentialsId: '4301f50b-9827-4838-bc70-127c20778da9', url: 'https://github.com/wahdann/final-task.git'
+                git branch: 'main', url: '$GITHUB_REPO', credentialsId: "git_cred"
             }
         }
-        
         stage('Build Docker Image') {
             steps {
                 script {
