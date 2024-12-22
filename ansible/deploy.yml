@@ -34,13 +34,13 @@
 
     - name: Pull Docker image from Docker Hub
       docker_image:
-        name: your-dockerhub-username/flask-weather-app
+        name: wahdann/flask-weather-app
         source: pull
 
     - name: Run Docker container
       docker_container:
         name: flask-app
-        image: your-dockerhub-username/flask-weather-app
+        image: wahdann/flask-weather-app
         state: started
         restart_policy: always
         published_ports:
