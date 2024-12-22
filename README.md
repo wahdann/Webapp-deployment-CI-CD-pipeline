@@ -45,7 +45,7 @@ The Jenkins pipeline includes the following stages:
 
 ## Deployment
 1. *Clone the Repository*:
-   ```bash
+   
    git clone https://github.com/wahdann/final-task.git
 
 2. Set Up Jenkins Pipeline:
@@ -79,14 +79,16 @@ http://192.168.56.15:5000
 
 ## Screenshots
 
-Jenkins Pipeline Stages
+- Jenkins Pipeline Stages :
+
 ![Pipeline Stages](images/jenkins.PNG)
 ![Pipeline Stages](images/Git-stage.PNG)
 ![Pipeline Stages](images/build-docker-image-stage.PNG)
 ![Pipeline Stages](images/push-image-to-dhub-stage.PNG)
 ![Pipeline Stages](images/ansible-playbook.PNG)
 
-Running Containers
+- Running Containers :
+
 ![Pipeline Stages](images/container-running-in-m01.PNG)
 ![Pipeline Stages](images/container-running-in-m02.PNG)
 ![Pipeline Stages](images/in-m01-browser.PNG)
@@ -113,7 +115,7 @@ python app.py
 2. Run with Docker:
 
 Build and run the container:
-
+```
 docker build -t flask-weather-app .
 docker run -p 5000:5000 flask-weather-app
-
+```
