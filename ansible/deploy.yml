@@ -1,36 +1,48 @@
 ---
-- hosts: all
+- name: Deploy Dockerized Flask App on CentOS
+  hosts: all
   become: true
   tasks:
-    - name: Install required packages
+    - name: Update and upgrade yum packages
       yum:
-        name: yum-utils
+        name: "*"
+        state: latest
+
+    - name: Install required packages for Docker
+      yum:
+        name:
+          - yum-utils
+          - device-mapper-persistent-data
+          - lvm2
         state: present
 
-    - name: Remove conflicting podman-docker package
-      yum:
-        name: podman-docker
-        state: absent
-
-    - name: Add Docker CE repository
+    - name: Add Docker repository
       command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+      args:
+        creates: /etc/yum.repos.d/docker-ce.repo
 
     - name: Install Docker
       yum:
-        name:
-          - docker-ce
-          - docker-ce-cli
-          - containerd.io
+        name: docker-ce
         state: present
 
-    - name: Start and enable Docker service
+    - name: Ensure Docker service is running
       service:
         name: docker
         state: started
-        enabled: yes
+        enabled: true
 
-    - name: Pull Docker Image
-      command: docker pull wahdann/flask-weather-app
+    - name: Pull Docker image from Docker Hub
+      docker_image:
+        name: your-dockerhub-username/flask-weather-app
+        source: pull
 
-    - name: Run Docker Container
-      command: docker run -d -p 5000:5000 wahdann/flask-weather-app
+    - name: Run Docker container
+      docker_container:
+        name: flask-app
+        image: your-dockerhub-username/flask-weather-app
+        state: started
+        restart_policy: always
+        published_ports:
+          - 5000:5000
+
