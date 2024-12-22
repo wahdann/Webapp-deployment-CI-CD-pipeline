@@ -3,10 +3,10 @@
   hosts: all
   become: true
   tasks:
-    - name: Update and upgrade yum packages
-      yum:
-        name: "*"
-        state: latest
+   # - name: Update and upgrade yum packages
+     # yum:
+     #   name: "*"
+    #    state: latest
 
     - name: Install required packages for Docker
       yum:
