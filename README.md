@@ -1,4 +1,4 @@
-# Flask Weather App CI/CD Deployment
+# Build and Deploy a Simple Web Application on Target Machines Using a CI Pipeline
 
 This project demonstrates a full CI/CD pipeline for deploying a containerized Flask weather application to two CentOS Vagrant machines using Jenkins, Docker, and Ansible.
 
